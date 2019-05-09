@@ -43,10 +43,10 @@ pipeline {
                 milestone(1)
                 withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
                     script {
-                        sh "sshpass -p '$USERPASS'  ssh -o StrictHostKeyChecking=no $USERNAME@192.168.10.12:8080 \"docker pull boxerwba/train-schedule:${env.BUILD_NUMBER}\""
+                        sh "sshpass -p '$USERPASS'  ssh -o StrictHostKeyChecking=no $USERNAME@192.168.10.12 \"docker pull boxerwba/train-schedule:${env.BUILD_NUMBER}\""
                         try {
-                            sh "sshpass -p '$USERPASS' ssh -o StrictHostKeyChecking=no $USERNAME@192.168.10.12:8080 \"docker stop train-schedule\""
-                            sh "sshpass -p '$USERPASS' ssh -o StrictHostKeyChecking=no $USERNAME@192.168.10.12:8080 \"docker rm train-schedule\""
+                            sh "sshpass -p '$USERPASS' ssh -o StrictHostKeyChecking=no $USERNAME@192.168.10.12 \"docker stop train-schedule\""
+                            sh "sshpass -p '$USERPASS' ssh -o StrictHostKeyChecking=no $USERNAME@192.168.10.12 \"docker rm train-schedule\""
                         } catch (err) {
                             echo: 'caught error: $err'
                         }
